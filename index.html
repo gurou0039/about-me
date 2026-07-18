@@ -1,44 +1,65 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>自己紹介</title>
-		<!-- reset.css ress -->
-		<link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css" />
-    <link rel="stylesheet" href="css/styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="紙をめくるような感覚で閲覧できる、静かな写真集と物語のWebブックです。">
+  <title>Paper Turn Book</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-<body class="body">
-    <header class="header">
-        <nav class="nav">
-            <ul>
-                <li><a href="#profile">プロフィール</a></li>
-                <li><a href="#hobbies">趣味</a></li>
-            </ul>
-        </nav>
-        <h1>わたしの自己紹介サイト</h1>
-    </header>
-    <main>
-        <section id="profile">
-            <h2>プロフィール</h2>
-            <p>こんにちは、わたしは[あなたの名前]です。これはわたしの自己紹介サイトです。</p>
-        </section>
-        <section id="hobbies">
-            <h2>趣味</h2>
-            <div class="hobby-card hobby-game">
-                <h3>ゲーム</h3>
-                <p>ゲームをする時間が好きです。</p>
+<body class="reading-mode">
+  <noscript>
+    <div class="message is-visible">このサイトを利用するには、JavaScriptを有効にしてください。</div>
+  </noscript>
+
+  <main class="app-shell" id="app">
+    <div class="book-stage" id="book-stage">
+      <div class="book" id="book">
+        <div class="loading" id="loading">Loading…</div>
+        <div class="page-hit-area page-hit-area--previous" aria-hidden="true"></div>
+        <div class="page-hit-area page-hit-area--next" aria-hidden="true"></div>
+        <div id="page-stage" aria-live="polite"></div>
+        <div class="book-shadow"></div>
+        <div class="controls" aria-label="ページ操作">
+          <div class="controls-top">
+            <button class="ghost-button" id="toc-button" type="button">目次</button>
+            <button class="ghost-button" id="fullscreen-button" type="button">全画面</button>
+          </div>
+          <button class="control-button control-button--prev" id="prev-button" type="button" aria-label="前のページへ戻る">前へ</button>
+          <div class="status-bar">
+            <span id="page-status">ページ 1 / 11</span>
+            <span class="page-number-pill" id="page-number-label" aria-live="polite">1</span>
+            <div class="page-jump">
+              <label class="screen-reader-only" for="page-input">ページ番号</label>
+              <input id="page-input" type="number" min="1" max="11" value="1" aria-label="ページ番号入力">
+              <button class="ghost-button" id="jump-button" type="button">移動</button>
             </div>
-            <div class="hobby-card hobby-modeling">
-                <h3>モデリング</h3>
-                <p>モデリングで形を作る作業に興味があります。</p>
-            </div>
-        </section>
-    </main>
-    <footer class="footer">
-        <p>&copy; 2024 わたしの自己紹介サイト</p>
-    </footer>
-    <script src="js/scripts.js"></script>
+          </div>
+          <button class="control-button control-button--next" id="next-button" type="button" aria-label="次のページへ進む">次へ</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="table-of-contents" id="table-of-contents" role="dialog" aria-modal="true" aria-labelledby="toc-title" aria-hidden="true">
+      <div class="toc-panel">
+        <h2 id="toc-title">目次</h2>
+        <div class="toc-list" id="toc-list"></div>
+      </div>
+    </div>
+
+    <div class="guidance" id="guidance">
+      <div class="guidance-card">
+        <h2>本をめくるように閲覧できます</h2>
+        <p>ページの端をクリックまたはドラッグすると、紙をめくるように移動できます。右矢印・左矢印キーでも操作できます。</p>
+        <button class="control-button" id="close-guidance-button" type="button">はじめての操作を閉じる</button>
+      </div>
+    </div>
+
+    <div class="message" id="message" role="status" aria-live="polite"></div>
+    <div class="screen-reader-only" id="live-region" aria-live="polite"></div>
+  </main>
+
+  <script src="script.js"></script>
 </body>
 </html>
 
